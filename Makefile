@@ -5,7 +5,8 @@ INSTALL_DIR = www
 BROWSERIFY := node_modules/browserify/bin/cmd.js
 EXORCIST := node_modules/exorcist/bin/exorcist.js
 CJSX := node_modules/coffee-react/bin/cjsx
-NPM_DEPS := $(BROWSERIFY) $(EXORCIST) $(CJSX)
+SASS := node_modules/node-sass/bin/node-sass
+NPM_DEPS := $(BROWSERIFY) $(EXORCIST) $(CJSX) $(SASS)
 
 
 default: build
@@ -29,16 +30,20 @@ $(NPM_DEPS):
 #
 #installing
 #
-BUNDLE := lib/bundle.js
+BUNDLE_JS := lib/bundle.js
+BUNDLE_CSS := lib/bundle.css
 CJSX_FILES := $(shell find src -wholename 'src/*.cjsx')
-JQUERY := node_modules/jquery/dist/jquery.min.js node_modules/jquery/dist/jquery.min.map
-FOUNDATION := vendor/foundation/css/foundation.min.css vendor/foundation/css/normalize.css vendor/foundation/js/foundation/foundation.min.js
+JQUERY := node_modules/jquery/dist/jquery.js
+FOUNDATION_JS := node_modules/zurb-foundation-5/js/foundation/foundation.js
+FOUNDATION_SCSS := node_modules/zurb-foundation-5/scss/
+#FOUNDATION_CSS := vendor/foundation/css/foundation.min.css vendor/foundation/css/normalize.css
+#FOUNDATION_JS := vendor/foundation/js/foundation.min.js vendor/foundation/js/vendor/modernizr.js
 FONTAWESOME := node_modules/font-awesome/css/font-awesome.css.map node_modules/font-awesome/css/font-awesome.min.css node_modules/font-awesome/fonts/fontawesome-webfont.ttf node_modules/font-awesome/fonts/fontawesome-webfont.woff node_modules/font-awesome/fonts/fontawesome-webfont.woff2
-CSS := $(wildcard css/*)
+SASS := $(wildcard css/*)
 IMG := $(wildcard img/*)
 HTML := $(wildcard ./*.html)
 
-PREINSTALL := $(BUNDLE) $(CSS) $(IMG) $(HTML) $(FONTAWESOME) $(FOUNDATION) $(JQUERY)
+PREINSTALL := $(BUNDLE_JS) $(BUNDLE_CSS) $(IMG) $(HTML) $(FONTAWESOME) $(FOUNDATION) $(JQUERY)
 POSTINSTALL := $(addprefix $(INSTALL_DIR)/,$(PREINSTALL))
 
 install: $(POSTINSTALL)
@@ -55,8 +60,10 @@ build: $(BUNDLE)
 $(BUNDLE): $(CJSX_FILES) $(CSS) $(CJSX) $(BROWSERIFY) $(EXORCIST)
 	@mkdir -p lib
 	@command -v node >/dev/null 2>&1 || { echo >&2 "I require node but it's not installed.  Aborting."; exit 1; }
-	./$(CJSX) -cbm -o lib $(CJSX_FILES)
-	node $(BROWSERIFY) lib/main.js -t browserify-css css/main.css --debug | ./$(EXORCIST) $(BUNDLE).map > $(BUNDLE)
+	./$(CJSX) -cbm -o build/ $(CJSX_FILES)
+	./$(SASS) --source-map css/ -o css/main.css
+	./$(SASS) $(FOUNDATION) -o css/main.css
+	node $(BROWSERIFY) build/main.js --debug | ./$(EXORCIST) $(BUNDLE).map > $(BUNDLE)
 
 #for production use this one
 #node $(BROWSERIFY) -t coffeeify --extension=".coffee" src/main.coffee > lib/bundle.js

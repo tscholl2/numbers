@@ -3,22 +3,27 @@
   <head>
     <title>Hello React</title>
     <!-- Not present in the tutorial. Just for basic styling. -->
-    <script src="vendor/foundation/js/modernizr.js"></script>
-    <script src="vendor/foundation/js/foundation.min.js"></script>
-    <script src="vendor/foundation/css/modernizr.js"></script>
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(document).foundation()
-    </script>
+    <script src="vendor/foundation/js/vendor/modernizr.js"></script>
+
+    @import url("../vendor/foundation/css/foundation.min.css");
+    @import url("../vendor/foundation/css/normalize.css");
+
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" />
-    node_modules/font-awesome/fonts/fontawesome-webfont.ttf
-    node_modules/font-awesome/fonts/fontawesome-webfont.woff
-    node_modules/font-awesome/fonts/fontawesome-webfont.woff2
+    <link rel="stylesheet" href="node_modules/font-awesome/fonts/fontawesome-webfont.ttf" />
+    <link rel="stylesheet" href="node_modules/font-awesome/fonts/fontawesome-webfont.woff" />
+    <link rel="stylesheet" href="node_modules/font-awesome/fonts/fontawesome-webfont.woff2" />
     <!--link rel="stylesheet" href="css/main.css" /-->
   </head>
   <body>
     <div id="content"></div>
     <a href="#" class="button">Default Button</a>
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="vendor/foundation/js/foundation.min.js"></script>
+    <script type="text/javascript">
+        $(document).foundation()
+    </script>
+
     <script type="text/javascript" src="lib/bundle.js"></script>
   </body>
 </html>

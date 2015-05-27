@@ -1,5 +1,3 @@
-window.jQuery = require 'jquery'
-window.$ = jQuery
 React = require 'react'
 
 NeatComponent = React.createClass

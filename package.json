@@ -1,0 +1,15 @@
+{
+  "name": "numbers",
+  "description": "number app",
+  "author": "Travis",
+  "dependencies": {
+    "bower": "latest",
+    "browserify": "latest",
+    "exorcist": "latest",
+    "coffee-script": "latest",
+    "coffeeify": "latest",
+    "coffee-react": "latest",
+    "jquery": "latest",
+    "browserify-css": "latest",
+    "font-awesome": "latest"}
+}

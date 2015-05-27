@@ -1,4 +1,4 @@
 
-f = () -> console.log  "test includeed!"
+f = () -> console.log  "test includseed!"
 
 module.exports = f

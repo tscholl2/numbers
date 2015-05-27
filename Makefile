@@ -32,20 +32,23 @@ BUNDLE_JS := lib/bundle.js
 $(BUNDLE_JS): $(JS_FILES)
 	@mkdir -p lib
 	@command -v node >/dev/null 2>&1 || { echo >&2 "I require node but it's not installed.  Aborting."; exit 1; }
-	node $(BROWSERIFY) build/main.js --debug | ./$(EXORCIST) $(BUNDLE_JS).map > $(BUNDLE_JS)
+	@ #node $(BROWSERIFY) build/main.js --debug | ./$(EXORCIST) $(BUNDLE_JS).map > $(BUNDLE_JS)
+	node $(BROWSERIFY) build/main.js > $(BUNDLE_JS)
 
 #
 #css
 #
-SCSS_FILES := $(wildcard scss/*) node_modules/zurb-foundation-5/scss/foundation.scss node_modules/zurb-foundation-5/scss/normalize.scss
-CSS_FILES := $(subst .scss,.css,$(addprefix build/,$(SCSS_FILES)))
-BUILT_CSS := $(addprefix build/, $(notdir $(CSS_FILES)))
+SCSS_FILES := $(wildcard scss/*)
+SCSS_LIB_FILES := node_modules/zurb-foundation-5/scss/foundation.scss node_modules/zurb-foundation-5/scss/normalize.scss
+CSS_FILES := $(addprefix build/, $(notdir $(subst .scss,.css,$(SCSS_FILES))))
 build/%.css: %.scss
-	./$(SASS) $< --output build/
+	./$(SASS) $< --output $(@D)
+#$(BUILT_CSS): $(SCSS_FILES)
+#	./$(SASS) $@ --output build/
 BUNDLE_CSS := lib/bundle.css
-$(BUNDLE_CSS): $(BUILT_CSS)
-	$(RM) -f $(BUNDLE_CSS)
-	cat $(BUILT_CSS) >> $(BUNDLE_CSS)
+$(BUNDLE_CSS): $(CSS_FILES)
+	$(RM) -f $@
+	cat $< >> $@
 
 #
 # installing

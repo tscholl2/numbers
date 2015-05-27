@@ -19,8 +19,8 @@ a()
 
 # on site load
 
-window.jQuery = require "jquery"
-window.$ = jQuery
+$ = require "jquery"
+#window.$ = jQuery
 foundation = require "../node_modules/zurb-foundation-5/js/foundation/foundation.js"
 
 $(document).foundation()

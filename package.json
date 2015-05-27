@@ -11,5 +11,6 @@
     "coffee-react": "latest",
     "jquery": "latest",
     "browserify-css": "latest",
+    "react": "latest",
     "font-awesome": "latest"}
 }

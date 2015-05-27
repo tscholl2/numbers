@@ -32,12 +32,12 @@ $(NPM_DEPS):
 #
 BUNDLE = lib/bundle.js
 CJSX_FILES := $(shell find src -wholename 'src/*.cjsx')
+FOUNDATION := vendor/foundation/css/foundation.min.css vendor/foundation/css/normalize.css
 FONTAWESOME := node_modules/font-awesome/css/font-awesome.min.css node_modules/font-awesome/fonts/fontawesome-webfont.ttf node_modules/font-awesome/fonts/fontawesome-webfont.woff node_modules/font-awesome/fonts/fontawesome-webfont.woff2
-#BOOTSTRAP := node_modules/bootstrap/dist/css/bootstrap.min.css node_modules/bootstrap/dist/css/bootstrap-theme.min.css
 CSS := $(wildcard css/*)
 IMG := $(wildcard img/*)
 HTML := $(wildcard ./*.html)
-PREINSTALL := $(BUNDLE) $(CSS) $(IMG) $(HTML) $(FONTAWESOME) #$(BOOTSTRAP)
+PREINSTALL := $(BUNDLE) $(CSS) $(IMG) $(HTML) $(FONTAWESOME) $(FOUNDATION)
 POSTINSTALL := $(addprefix $(INSTALL_DIR)/,$(PREINSTALL))
 install: $(POSTINSTALL)
 

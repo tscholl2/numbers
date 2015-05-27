@@ -1,3 +1,7 @@
+window.jQuery = require 'jquery'
+window.$ = jQuery
+React = require 'react'
+
 NeatComponent = React.createClass
   render: ->
     <div className="neat-component">
@@ -7,3 +11,7 @@ NeatComponent = React.createClass
     </div>
 
 React.render <NeatComponent />, document.getElementById "content"
+
+foundation = require '../vendor/foundation/js/foundation.min.js'
+console.log foundation
+window.f = foundation

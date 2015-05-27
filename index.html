@@ -3,7 +3,18 @@
   <head>
     <title>Hello React</title>
     <!-- Not present in the tutorial. Just for basic styling. -->
-    <link rel="stylesheet" href="css/main.css" />
+    <script src="vendor/foundation/js/modernizr.js"></script>
+    <script src="vendor/foundation/js/foundation.min.js"></script>
+    <script src="vendor/foundation/css/modernizr.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).foundation()
+    </script>
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" />
+    node_modules/font-awesome/fonts/fontawesome-webfont.ttf
+    node_modules/font-awesome/fonts/fontawesome-webfont.woff
+    node_modules/font-awesome/fonts/fontawesome-webfont.woff2
+    <!--link rel="stylesheet" href="css/main.css" /-->
   </head>
   <body>
     <div id="content"></div>

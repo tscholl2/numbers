@@ -2,11 +2,10 @@
 INSTALL_DIR = www
 
 #npm stuff
-BOWER := node_modules/bower/bin/bower
 BROWSERIFY := node_modules/browserify/bin/cmd.js
 EXORCIST := node_modules/exorcist/bin/exorcist.js
 CJSX := node_modules/coffee-react/bin/cjsx
-NPM_DEPS := $(BOWER) $(BROWSERIFY) $(COFFEE) $(EXORCIST) $(CJSX)
+NPM_DEPS := $(BROWSERIFY) $(EXORCIST) $(CJSX)
 
 
 default: build
@@ -30,15 +29,18 @@ $(NPM_DEPS):
 #
 #installing
 #
-BUNDLE = lib/bundle.js
+BUNDLE := lib/bundle.js
 CJSX_FILES := $(shell find src -wholename 'src/*.cjsx')
-FOUNDATION := vendor/foundation/css/foundation.min.css vendor/foundation/css/normalize.css
-FONTAWESOME := node_modules/font-awesome/css/font-awesome.min.css node_modules/font-awesome/fonts/fontawesome-webfont.ttf node_modules/font-awesome/fonts/fontawesome-webfont.woff node_modules/font-awesome/fonts/fontawesome-webfont.woff2
+JQUERY := node_modules/jquery/dist/jquery.min.js node_modules/jquery/dist/jquery.min.map
+FOUNDATION := vendor/foundation/css/foundation.min.css vendor/foundation/css/normalize.css vendor/foundation/js/foundation/foundation.min.js
+FONTAWESOME := node_modules/font-awesome/css/font-awesome.css.map node_modules/font-awesome/css/font-awesome.min.css node_modules/font-awesome/fonts/fontawesome-webfont.ttf node_modules/font-awesome/fonts/fontawesome-webfont.woff node_modules/font-awesome/fonts/fontawesome-webfont.woff2
 CSS := $(wildcard css/*)
 IMG := $(wildcard img/*)
 HTML := $(wildcard ./*.html)
-PREINSTALL := $(BUNDLE) $(CSS) $(IMG) $(HTML) $(FONTAWESOME) $(FOUNDATION)
+
+PREINSTALL := $(BUNDLE) $(CSS) $(IMG) $(HTML) $(FONTAWESOME) $(FOUNDATION) $(JQUERY)
 POSTINSTALL := $(addprefix $(INSTALL_DIR)/,$(PREINSTALL))
+
 install: $(POSTINSTALL)
 
 $(INSTALL_DIR)/%: %

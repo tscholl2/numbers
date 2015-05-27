@@ -3,7 +3,6 @@
   "description": "number app",
   "author": "Travis",
   "dependencies": {
-    "bower": "latest",
     "browserify": "latest",
     "exorcist": "latest",
     "coffee-script": "latest",

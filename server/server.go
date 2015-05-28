@@ -9,7 +9,7 @@ import (
 	"github.com/tscholl2/pisearch/digits"
 )
 
-func requestRandom(w http.ResponseWriter, r *http.Request) {
+func reqRand(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	// check for errors and read request
 	err := r.ParseForm()
@@ -44,7 +44,7 @@ func requestRandom(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(s))
 }
 
-func requestPi(w http.ResponseWriter, r *http.Request) {
+func reqPi(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	// check for errors and read request
 	err := r.ParseForm()
@@ -76,7 +76,7 @@ func requestPi(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/pi", requestPi)
-	http.HandleFunc("/rand", requestRandom)
+	http.HandleFunc("/pi", reqPi)
+	http.HandleFunc("/rand", reqRand)
 	http.ListenAndServe(":8888", nil)
 }

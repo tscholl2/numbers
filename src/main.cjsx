@@ -1,7 +1,10 @@
-#window.jQuery = require 'jquery'
-#window.$ = jQuery
-
 React = require 'react'
+
+RandomNumberComponent = React.createClass
+    render: ->
+        <div className="random">
+            ??
+        </div>
 
 NeatComponent = React.createClass
   render: ->
@@ -14,13 +17,14 @@ NeatComponent = React.createClass
 React.render <NeatComponent />, document.getElementById "content"
 
 a = require "./test.js"
-
 a()
+
+b = require "./foo/test2.js"
+b()
 
 # on site load
 
-$ = require "jquery"
-#window.$ = jQuery
+window.jQuery = require "jquery"
+window.$ = jQuery
 foundation = require "../node_modules/zurb-foundation-5/js/foundation/foundation.js"
-
 $(document).foundation()

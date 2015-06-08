@@ -1,11 +1,20 @@
 React = require 'react'
-HeaderComponent = React.createClass
+
+Header = React.createClass
+
+  wrapperStyle:
+    "textAlign": "center"
+
+  headerStyle:
+    "fontFamily": "monospace"
+    "fontSize": "3em"
+    "textAlign": "center"
+    "fontStyle": "italic"
+
   render: ->
-    <div className="row">
-      <div className="small-12 columns text-center">
-        {<h1>Numbirds</h1>}
-      </div>
+    <div style=@wrapperStyle>
+      <h1 style=@headerStyle>Numbirds</h1>
       <hr />
     </div>
 
-module.exports = HeaderComponent
+module.exports = <Header />

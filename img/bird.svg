@@ -1,0 +1,23 @@
+<svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <g>
+  <title>Layer 1</title>
+  <line fill="none" stroke="#000000" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="304" y1="329" x2="281" y2="404" id="left_leg"/>
+  <line fill="none" stroke="#000000" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="360" y1="328" x2="379" y2="406" id="right_leg"/>
+  <ellipse ry="149" rx="210" id="body" cy="232" cx="323" stroke-width="5" stroke="#000000" fill="#00bfbf"/>
+  <circle stroke="#000000" id="left_eye" r="25" cy="100" cx="380" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="#ffffff"/>
+  <circle stroke="#000000" id="right_eye" r="25" cy="100" cx="445" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="#ffffff"/>
+  <g id="side_wing">
+   <ellipse ry="45" rx="139" id="wing" cy="246" cx="231" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" stroke="#000000" fill="#ffffff"/>
+   <line fill="none" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="319" y1="214" x2="230" y2="266" id="svg_2" stroke="#000000"/>
+   <line fill="none" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="350.5" y1="223" x2="265.5" y2="274" id="svg_3" stroke="#000000"/>
+   <line fill="none" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="277.5" y1="205" x2="175.5" y2="260" id="svg_5" stroke="#000000"/>
+   <line fill="none" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="218.5" y1="201" x2="140.5" y2="251" id="svg_6" stroke="#000000"/>
+   <line fill="none" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="171.5" y1="205" x2="104.5" y2="247" id="svg_7" stroke="#000000"/>
+  </g>
+  <g id="beak">
+   <path stroke="#000000" transform="rotate(90 532.8067626953126,225.54312133789068) " id="svg_14" d="m505.66504,275.04312l27.14172,-99.00002l27.14172,99.00002l-54.28345,0z" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="#ffff00"/>
+   <line stroke="#000000" fill="none" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="583" y1="226" x2="514.57178" y2="226" id="svg_1"/>
+  </g>
+ </g>
+</svg>

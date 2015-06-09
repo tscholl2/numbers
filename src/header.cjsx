@@ -1,6 +1,7 @@
 React = require 'react'
 
 Header = React.createClass
+  displayName: 'Header'
 
   wrapperStyle:
     "textAlign": "center"

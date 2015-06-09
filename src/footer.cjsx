@@ -1,6 +1,7 @@
 React = require 'react'
 
 Footer = React.createClass
+  displayName: 'Footer'
 
   wrapperStyle:
     "display": "block"

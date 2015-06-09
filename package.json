@@ -13,5 +13,6 @@
     "react": "latest",
     "node-sass": "latest",
     "zurb-foundation-5": "latest",
+    "react-loading": "latest",
     "font-awesome": "latest"}
 }

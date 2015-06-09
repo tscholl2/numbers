@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 )
 
 type requestMessage struct {
@@ -12,43 +13,44 @@ type requestMessage struct {
 }
 
 type responseMessage struct {
-	Bytes string `json:"bytes"`
+	Bytes []byte `json:"bytes"`
 	Error string `json:"error"`
 }
 
 func reqRand(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	// check for errors and read request
 	var settings requestMessage
-	err := json.NewDecoder(r.Body).Decode(&settings)
+	var msg responseMessage
+	r.ParseForm()
+	l, err := strconv.ParseUint(r.FormValue("length"), 10, 16)
 	if err != nil {
-		w.Write([]byte(fmt.Sprintf("{\"error\":\"%s\"}", err.Error())))
-		return
+		msg.Error = err.Error()
 	}
+	settings.Length = uint16(l)
 
 	// gather output and return
+
 	b := make([]byte, settings.Length)
-	n, err := rand.Read(b)
+	msg.Bytes = b
+	n, err := rand.Read(msg.Bytes)
 	if err != nil {
-		w.Write([]byte(fmt.Sprintf("{\"error\":\"%s\"}", err.Error())))
-		return
+		msg.Error = err.Error()
 	}
 	if n != len(b) {
-		w.Write([]byte(fmt.Sprint("{\"error\":\"Unable to read enough bytes.\"}")))
-		return
+		msg.Error = "Unable to read enough bytes."
 	}
-	s := "{\"bytes\":["
-	for i := 0; i < len(b); i++ {
-		s += fmt.Sprintf("\"%x\"", b[i])
-		if i < len(b)-1 {
-			s += ","
-		}
-	}
-	s += "]}"
-	w.Write([]byte(s))
+
+	m, _ := json.Marshal(&msg)
+	w.Write(m)
+
+	fmt.Println(string(m))
+
+	return
 }
 
 func main() {
 	http.HandleFunc("/rand", reqRand)
-	http.ListenAndServe(":8888", nil)
+	http.ListenAndServe(":8889", nil)
 }

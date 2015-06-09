@@ -1,13 +1,9 @@
 React = require 'react'
 
-Header = require "./header.js"
-Footer = require "./footer.js"
-Content = require "./content.js"
-
 start = ->
-  React.render Header, document.getElementById "header"
-  React.render Content, document.getElementById "content"
-  React.render Footer, document.getElementById "footer"
+  React.render require("./header.js"), document.getElementById "header"
+  React.render require("./content.js"), document.getElementById "content"
+  React.render require("./footer.js"), document.getElementById "footer"
 
 b = require "./foo/test2.js"
 b()

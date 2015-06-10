@@ -10,6 +10,7 @@ BROWSERIFY := node_modules/browserify/bin/cmd.js
 EXORCIST := node_modules/exorcist/bin/exorcist.js
 CJSX := node_modules/coffee-react/bin/cjsx
 SASS := node_modules/node-sass/bin/node-sass
+COFFEE := node_modules/coffee-script/bin/coffee
 
 #
 #setup
@@ -32,10 +33,14 @@ update: setup
 #javascript
 #
 CJSX_FILES := $(shell find src -wholename 'src/*.cjsx')
-JS_FILES := $(subst .cjsx,.js,$(subst src/,build/,$(CJSX_FILES)))
+COFFEE_FILES := $(shell find src -wholename 'src/*.coffee')
+JS_FILES := $(subst .cjsx,.js,$(subst src/,build/,$(CJSX_FILES))) $(subst .coffee,.js,$(subst src/,build/,$(COFFEE_FILES)))
 build/%.js: src/%.cjsx
 	./$(CJSX) --compile --map --bare --output $(@D) $<
 	@ # ./$(CJSX) --compile --bare --output $(@D) $<
+build/%.js: src/%.coffee
+	./$(COFFEE) --compile --map --bare --output $(@D) $<
+	@ # ./$(COFFEE) --compile --bare --output $(@D) $<
 BUNDLE_JS := lib/bundle.js
 $(BUNDLE_JS): $(JS_FILES)
 	node $(BROWSERIFY) build/main.js --debug | ./$(EXORCIST) $(BUNDLE_JS).map > $(BUNDLE_JS)
@@ -44,15 +49,9 @@ $(BUNDLE_JS): $(JS_FILES)
 #
 #css
 #
-SCSS_FILES := $(wildcard scss/*) foundation.scss normalize.scss
-CSS_FILES := $(addprefix build/, $(notdir $(subst .scss,.css,$(SCSS_FILES))))
-build/%.css: scss/%.scss
-	# ./$(SASS) --output build/ $<
-	./$(SASS) --source-map true --output build/ $<
-build/foundation.css: node_modules/zurb-foundation-5/scss/foundation.scss
-	# ./$(SASS) --output build/ $<
-	./$(SASS) --source-map true --output build/ $<
-build/normalize.css: node_modules/zurb-foundation-5/scss/normalize.scss
+SCSS_FILES := $(wildcard css/*)
+CSS_FILES := $(addprefix build/, $(notdir $(subst .sass,.css,$(SCSS_FILES))))
+build/%.css: css/%.sass
 	# ./$(SASS) --output build/ $<
 	./$(SASS) --source-map true --output build/ $<
 BUNDLE_CSS := lib/bundle.css
@@ -70,8 +69,7 @@ build: $(BUNDLE_JS) $(BUNDLE_CSS) setup
 #
 IMG := $(wildcard img/*)
 HTML := $(wildcard ./*.html)
-FONTS := node_modules/font-awesome/fonts/fontawesome-webfont.ttf node_modules/font-awesome/fonts/fontawesome-webfont.woff node_modules/font-awesome/fonts/fontawesome-webfont.woff2 node_modules/font-awesome/fonts/FontAwesome.otf
-PREINSTALL := $(BUNDLE_JS) $(BUNDLE_CSS) $(IMG) $(HTML) $(FONTS)
+PREINSTALL := $(BUNDLE_JS) $(BUNDLE_CSS) $(IMG) $(HTML)
 POSTINSTALL := $(addprefix $(INSTALL_DIR)/,$(PREINSTALL))
 $(INSTALL_DIR)/%: %
 	install -m 644 -D $< $@

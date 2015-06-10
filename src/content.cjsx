@@ -1,103 +1,72 @@
 React = require 'react'
 Loading = require 'react-loading'
-
-base64ToByteArray = (s) ->
-  b = []
-  i = 0
-  d = atob(s)
-  while not isNaN d.charCodeAt i
-    b.push(d.charCodeAt(i))
-    i++
-  return b
-
-encodeURIObject = (obj) ->
-  s = ""
-  for k,v of obj
-    s += "\&#{encodeURIComponent(k)}=#{encodeURIComponent(v)}"
-  return s
-
-get = (url,type="GET",data=null) ->
-  # Return a new promise.
-  new Promise (resolve, reject) ->
-    # Do the usual XHR stuff
-    req = new XMLHttpRequest()
-    if data? and type is "GET"
-      url += "?#{encodeURIObject(data)}"
-    req.open type, url
-
-    req.onload = () ->
-      # This is called even on 404 etc
-      # so check the status
-      if req.status == 200
-        # Resolve the promise with the response text
-        console.log req.response
-        resolve JSON.parse(req.response)
-      else
-        # Otherwise reject with the status text
-        # which will hopefully be a meaningful error
-        reject Error req.statusText
-
-    # Handle network errors
-    req.onerror = () ->
-      reject Error "Network Error"
-
-    # Make the request
-    if type is "POST" and data?
-      req.send encodeURIObject data
-    else
-      req.send()
-
+utils = require './utils.js'
+ajax = require './ajax.js'
+mui = require('material-ui')
+RaisedButton = mui.RaisedButton
+Paper = mui.Paper
+ThemeManager = new mui.Styles.ThemeManager()
+Slider = mui.Slider
 
 Bird = React.createClass
   displayName: 'Bird'
 
-  birdStyle:
-    "flex": 1
-    "alignItems": "flex-end"
-    "textAlign": "right"
-    "flexGrow": 2
-
   render: ->
-    <div style=@birdStyle >
-      <img src="img/bird.svg" />
+    <div>
+      <img style={maxWidth:"400px"} src="img/bird.svg" />
     </div>
 
 SpeechBubble = React.createClass
   displayName: 'SpeechBubble'
 
-  wrapperStyle:
-    "flex": 1
-    "alignItems": "flex-start"
-    "textAlign": "left"
+  childContextTypes:
+    muiTheme: React.PropTypes.object
 
-  bubbleStyle:
-    "backgroundColor": "white"
-    "margin": "2px"
-    "padding": "20px"
-    "borderRadius": "50px"
-    "textAlign": "left"
-    "display": "inline-block"
-    "border": "2px solid black"
-    "wordWrap": "break-word"
+  getChildContext: () ->
+      muiTheme: ThemeManager.getCurrentTheme()
 
   getDefaultProps: ->
     bytes: null
 
   render: ->
-    <div style=@wrapperStyle>
-        <div>
-          <div style=@bubbleStyle>
-            {if @props.bytes? then "[#{@props.bytes}]" else <Loading type='bars' />}
-          </div>
-        </div>
-    </div>
+    <Paper rounded={true} style={borderRadius:"40px",padding:"20px"}>
+      {
+        if @props.bytes?
+          "[#{@props.bytes.join(', ')}]"
+        else
+          <Loading type='bars' />
+      }
+    </Paper>
 
 Settings = React.createClass
   displayName: "Settings"
-  #TODO write this
+
+  getInitialState: () ->
+    number_of_bytes: 10
+
+  childContextTypes:
+    muiTheme: React.PropTypes.object
+
+  getChildContext: () ->
+      muiTheme: ThemeManager.getCurrentTheme()
+
+  updateState: () ->
+    @setState
+      number_of_bytes: 1
 
   render: ->
-    #TODO write this
+    <Paper rounded={true} style={borderRadius:"40px",padding:"20px"}>
+      <RaisedButton label="Caw" />
+      <br/>
+      <p>Number of Bytes: {@state.number_of_bytes}</p>
+      <Slider
+        name="number_of_bytes"
+        min={1}
+        defaultValue={@state.number_of_bytes}
+        max={100}
+        onChange={@updateState}
+      />
+    </Paper>
 
 Content = React.createClass
   displayName: "Content"
@@ -111,14 +80,14 @@ Content = React.createClass
       console.log res
       if res.error? and res.error != ""
         return onError(res)
-      arr = base64ToByteArray res.bytes
+      arr = utils.base64ToByteArray res.bytes
       console.log arr
       if @isMounted()
         a = =>
           @setState
             bytes: arr
         setTimeout a, 750
-    get "http://localhost:8889/rand", "GET", {length:10}
+    ajax "http://localhost:8889/rand", "GET", {length:10}
     .then onSuccess
     .catch onError
 
@@ -126,9 +95,29 @@ Content = React.createClass
     bytes: null #[1,2]
 
   render: ->
-    <div style={display:"flex"}>
-      <Bird />
-      <SpeechBubble bytes={@state.bytes} />
+    <div style={
+      display:"flex"
+    }>
+      <div>
+        <Bird />
+      </div>
+      <div style={
+        display:"flex"
+        flexDirection:"column"
+      }>
+        <div style={
+          flex:1
+          alignItems:"flex-start"
+        }>
+          <SpeechBubble bytes={@state.bytes} />
+        </div>
+        <div style={
+          flex: 1
+          alignItems: "flex-end"
+        }>
+          <Settings />
+        </div>
+      </div>
     </div>
 
 module.exports = <Content />

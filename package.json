@@ -12,7 +12,7 @@
     "browserify-css": "latest",
     "react": "latest",
     "node-sass": "latest",
-    "zurb-foundation-5": "latest",
+    "material-ui":"latest",
     "react-loading": "latest",
     "font-awesome": "latest"}
 }

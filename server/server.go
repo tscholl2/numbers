@@ -3,7 +3,6 @@ package main
 import (
 	"crypto/rand"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 )
@@ -20,6 +19,7 @@ type responseMessage struct {
 func reqRand(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+
 	// check for errors and read request
 	var settings requestMessage
 	var msg responseMessage
@@ -31,7 +31,6 @@ func reqRand(w http.ResponseWriter, r *http.Request) {
 	settings.Length = uint16(l)
 
 	// gather output and return
-
 	b := make([]byte, settings.Length)
 	msg.Bytes = b
 	n, err := rand.Read(msg.Bytes)
@@ -44,8 +43,6 @@ func reqRand(w http.ResponseWriter, r *http.Request) {
 
 	m, _ := json.Marshal(&msg)
 	w.Write(m)
-
-	fmt.Println(string(m))
 
 	return
 }

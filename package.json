@@ -8,11 +8,10 @@
     "coffee-script": "latest",
     "coffeeify": "latest",
     "coffee-react": "latest",
-    "jquery": "latest",
     "browserify-css": "latest",
     "react": "latest",
     "node-sass": "latest",
     "material-ui":"latest",
     "react-loading": "latest",
-    "font-awesome": "latest"}
+    "flux": "latest"}
 }

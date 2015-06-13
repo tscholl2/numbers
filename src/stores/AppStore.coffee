@@ -11,9 +11,15 @@ _ids = []
 
 create = (response) ->
     id = (+new Date() + Math.floor(Math.random() * 999999)).toString 36
-    _todos[id] =
-        id: id
-        response: response
+    if response?
+        _data[id] =
+            id: id
+            status: "recieved"
+            response: response
+    else
+        _data[id] =
+            id: id
+            status: "sent"
     _ids.push id
 
 AppStore = assign {}, EventEmitter.prototype

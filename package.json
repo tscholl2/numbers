@@ -12,6 +12,7 @@
     "react": "latest",
     "node-sass": "latest",
     "material-ui":"latest",
+    "keymirror":"latest",
     "react-loading": "latest",
     "flux": "latest"}
 }

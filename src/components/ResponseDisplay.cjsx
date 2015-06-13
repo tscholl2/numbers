@@ -17,13 +17,15 @@ SpeechBubble = React.createClass
       muiTheme: ThemeManager.getCurrentTheme()
 
   getDefaultProps: ->
-    bytes: null
+    response: null
+    status: "blank" # TODO use this to generate error object or display
 
   render: ->
+      # TODO fix???
     <Paper rounded={true} style={borderRadius:"40px",padding:"20px"}>
       {
-        if @props.bytes?
-          "[#{utils.base64ToByteArray(@props.bytes).join(', ')}]"
+        if @props.response?.bytes?
+          "[#{utils.base64ToByteArray(@props.response.bytes).join(', ')}]"
         else
           <Loading type='bars' />
       }
@@ -46,13 +48,7 @@ ResponseDisplay = React.createClass
         @setState @getStateFromStore()
 
     render: ->
-        {
-            if @state.response?
-                return <SpeechBubble bytes={@state.response.bytes} />
-            if @state.response.error is not ''
-                return <p>Errrrrrr: {"#{@state.response.error}"}</p>
-            return <p>Errrrrrr: {"unknown state: #{@state}"}</p>
-        }
+        <SpeechBubble status={@state.status} response={@state.response} />
 
 
 module.exports = <ResponseDisplay />

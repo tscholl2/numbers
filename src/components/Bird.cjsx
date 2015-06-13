@@ -1,11 +1,11 @@
 React = require 'react'
 
 Bird = React.createClass
-  displayName: 'Bird'
+    displayName: 'Bird'
 
-  render: ->
-    <div>
-      <img style={maxWidth:"400px"} src="img/bird.svg" />
-    </div>
+    render: ->
+        <div>
+            <img style={maxWidth:"400px"} src={"img/bird.svg"} />
+        </div>
 
 module.exports = <Bird />

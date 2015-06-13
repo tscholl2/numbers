@@ -23,9 +23,11 @@ $(npm-setinal): $(NPM_DEPS)
 	touch $(npm-setinal)
 $(NPM_DEPS):
 	npm install
+
 setup: $(npm-setinal)
 	@mkdir -p build/
 	@mkdir -p lib/
+
 update: setup
 	npm install
 
@@ -62,7 +64,7 @@ $(BUNDLE_CSS): $(CSS_FILES)
 #
 # building
 #
-build: $(BUNDLE_JS) $(BUNDLE_CSS) setup
+build: setup $(BUNDLE_JS) $(BUNDLE_CSS)
 
 #
 # installing

@@ -18,4 +18,4 @@ Header = React.createClass
       <hr />
     </div>
 
-module.exports = <Header />
+module.exports = Header

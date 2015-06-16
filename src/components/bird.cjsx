@@ -5,7 +5,7 @@ Bird = React.createClass
 
     render: ->
         <div>
-            <img style={maxWidth:"400px"} src={"img/bird.svg"} />
+            <img style={maxWidth:"400px"} src="img/bird.svg" />
         </div>
 
-module.exports = <Bird />
+module.exports = Bird

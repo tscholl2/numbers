@@ -1,9 +1,13 @@
 React = require 'react'
 
+Header = require("./components/header")
+Content = require("./components/content")
+Footer = require("./components/footer")
+
 start = ->
-  React.render require("./components/header"), document.getElementById "header"
-  React.render require("./components/content"), document.getElementById "content"
-  React.render require("./components/footer"), document.getElementById "footer"
+  React.render <Header />, document.getElementById "header"
+  React.render <Content />, document.getElementById "content"
+  React.render <Footer />, document.getElementById "footer"
 
 # on site load
 setTimeout(start, 250)

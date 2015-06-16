@@ -1,11 +1,11 @@
 React = require 'react'
 Loading = require 'react-loading'
 utils = require '../utils'
-ajax = require '../ajax'
 mui = require 'material-ui'
 RaisedButton = mui.RaisedButton
 Paper = mui.Paper
 ThemeManager = new mui.Styles.ThemeManager()
+AppStore = require '../stores/AppStore'
 
 SpeechBubble = React.createClass
   displayName: 'SpeechBubble'
@@ -24,10 +24,20 @@ SpeechBubble = React.createClass
       # TODO fix???
     <Paper rounded={true} style={borderRadius:"40px",padding:"20px"}>
       {
-        if @props.response?.bytes?
-          "[#{utils.base64ToByteArray(@props.response.bytes).join(', ')}]"
-        else
-          <Loading type='bars' />
+        console.log "rendering bubble: "
+        console.log @props
+        switch @props.status
+          when "recieved"
+            res = if @props.response? then @props.response else {}
+            if res.error? and res.error is not ""
+              "Err: #{res.error}"
+            else
+              if res.bytes?
+                "[#{utils.base64ToByteArray(res.bytes).join(', ')}]"
+          when "sent"
+            <Loading type='bars' />
+          when "blank"
+            "Hello!"
       }
     </Paper>
 
@@ -44,11 +54,12 @@ ResponseDisplay = React.createClass
     componentDidMount: ->
         AppStore.addChangeListener @_onResponse
 
-    _onResponse:  ->
+    _onResponse: ->
+        console.log "ResponseDisplay: _onResponse"
         @setState @getStateFromStore()
 
     render: ->
         <SpeechBubble status={@state.status} response={@state.response} />
 
 
-module.exports = <ResponseDisplay />
+module.exports = ResponseDisplay

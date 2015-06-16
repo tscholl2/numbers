@@ -20,9 +20,10 @@ create = (response) ->
         _data[id] =
             id: id
             status: "sent"
+            response: null
     _ids.push id
 
-AppStore = assign {}, EventEmitter.prototype
+AppStore = assign {}, EventEmitter.prototype,
 
     emitChange: ->
         @emit CHANGE_EVENT
@@ -41,14 +42,19 @@ AppStore = assign {}, EventEmitter.prototype
 
 # Register callback to handle all updates
 AppDispatcher.register (action) ->
+  console.log "store: regiserting..."
+  switch action.actionType
+      when AppConstants.RESPONSE_RECIEVED
+        console.log "store: response recieved"
+        console.log "store: action = "
+        console.log action
+        if action.response?
+          console.log "store: emitting response change"
+          create action.response
+          AppStore.emitChange()
 
-    switch action.actionType
-        when AppConstants.RESPONSE_RECIEVED
-            if action.reponse?
-                create action.response
-                AppStore.emitChange()
-
-        when AppConstants.REQUEST_SENT
-            AppStore.emitChange()
+      when AppConstants.REQUEST_SENT
+        create null
+        AppStore.emitChange()
 
 module.exports = AppStore;

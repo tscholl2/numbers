@@ -1,5 +1,4 @@
 React = require 'react'
-ajax = require '../ajax'
 mui = require 'material-ui'
 RaisedButton = mui.RaisedButton
 Paper = mui.Paper
@@ -20,16 +19,16 @@ Settings = React.createClass
   getChildContext: ->
       muiTheme: ThemeManager.getCurrentTheme()
 
-  updateState: ->
+  updateLength: (e,value)->
     @setState
-      number_of_bytes: 1
+      length: Math.floor value
 
   onClick: ->
       AppActions.sendRequest @state
 
   render: ->
     <Paper rounded={true} style={borderRadius:"40px",padding:"20px"}>
-      <RaisedButton label="Caw" />
+      <RaisedButton label="Caw" onClick={@onClick}   />
       <br/>
       <p>Number of Bytes: {@state.length}</p>
       <Slider
@@ -37,8 +36,8 @@ Settings = React.createClass
         min={1}
         defaultValue={@state.length}
         max={100}
-        onChange={@updateState}
+        onChange={@updateLength}
       />
     </Paper>
 
-module.exports = <Settings />
+module.exports = Settings

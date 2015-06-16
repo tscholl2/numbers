@@ -1,7 +1,7 @@
 React = require 'react'
-Bird = require './Bird'
-#Settings = require './Settings'
-#ResponseDisplay = require './ResponseDisplay'
+Bird = require './bird'
+Settings = require './Settings'
+ResponseDisplay = require './ResponseDisplay'
 
 Content = React.createClass
     displayName: "Content"
@@ -10,7 +10,7 @@ Content = React.createClass
         <div style={
             display:"flex"
         }>
-            {<Bird />}
+            <Bird />
             <div style={
                 display:"flex"
                 flexDirection:"column"
@@ -19,15 +19,15 @@ Content = React.createClass
                     flex:1
                     alignItems:"flex-start"
                 }>
-                    {#<ResponseDisplay />}
+                    <ResponseDisplay />
                 </div>
                 <div style={
                     flex: 1
                     alignItems: "flex-end"
                 }>
-                    {#<Settings />}
+                    <Settings />
                 </div>
             </div>
         </div>
 
-module.exports = <Content />
+module.exports = Content

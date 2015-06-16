@@ -21,4 +21,4 @@ Footer = React.createClass
   shouldComponentUpdate: ->
       return false
 
-module.exports = <Footer />
+module.exports = Footer

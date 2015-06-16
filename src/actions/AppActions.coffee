@@ -1,25 +1,31 @@
 
 AppDispatcher = require '../dispatcher/AppDispatcher'
 AppConstants = require '../constants/AppConstants'
+ajax = require '../ajax'
 
 module.exports =
 
     sendRequest: (settings) ->
-        ajax "http://localhost:8889/rand", "GET", @state
-        .then @_onSuccess
-        .catch @_onError
-        # not sure if this is ok...
-        AppDispatcher.dispatch
-            actionType: AppConstants.REQUEST_SENT
+      console.log "actions: calling ajax"
+      ajax "http://localhost:8889/rand", "GET", settings
+      .then @_onSuccess
+      .catch @_onError
+      # not sure if this is ok...
+      AppDispatcher.dispatch
+          actionType: AppConstants.REQUEST_SENT
 
     _onError: (res) ->
-        AppDispatcher.dispatch
-            actionType: AppConstants.RESPONSE_RECIEVED
-        console.log "ERROR"
-        console.log res
+      console.log "actions: ERROR"
+      console.log res
+      f = -> AppDispatcher.dispatch
+          actionType: AppConstants.RESPONSE_RECIEVED
+          response: res
+      setTimeout f, 750
 
     _onSuccess: (res) ->
-        AppDispatcher.dispatch
-            actionType: AppConstants.RESPONSE_RECIEVED
-        console.log "SUCCESS"
-        console.log res
+      console.log "actions: SUCCESS"
+      console.log res
+      f = -> AppDispatcher.dispatch
+          actionType: AppConstants.RESPONSE_RECIEVED
+          response: res
+      setTimeout f, 750

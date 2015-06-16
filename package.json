@@ -13,6 +13,7 @@
     "node-sass": "latest",
     "material-ui":"latest",
     "keymirror":"latest",
+    "object-assign": "latest",
     "react-loading": "latest",
     "flux": "latest"}
 }

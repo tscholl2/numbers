@@ -4,14 +4,15 @@ RaisedButton = mui.RaisedButton
 Paper = mui.Paper
 ThemeManager = new mui.Styles.ThemeManager()
 Slider = mui.Slider
-Bird = require './Bird'
 AppActions = require '../actions/AppActions'
+AppStore = require '../stores/AppStore'
 
 Settings = React.createClass
   displayName: "Settings"
 
   getInitialState: ->
     length: 10
+    status: "ready"
 
   childContextTypes:
     muiTheme: React.PropTypes.object
@@ -23,12 +24,20 @@ Settings = React.createClass
     @setState
       length: Math.floor value
 
+  _onUpdate: ->
+    res = AppStore.getCurrent()
+    @setState
+      status: if res.status is "sent" then "waiting" else "ready"
+
+  componentDidMount: ->
+    AppStore.addChangeListener @_onUpdate
+
   onClick: ->
-      AppActions.sendRequest @state
+    AppActions.sendRequest @state
 
   render: ->
     <Paper rounded={true} style={borderRadius:"40px",padding:"20px"}>
-      <RaisedButton label="Caw" onClick={@onClick}   />
+      <RaisedButton label="Caw" onClick={@onClick} disabled={@state.status is "waiting"} />
       <br/>
       <p>Number of Bytes: {@state.length}</p>
       <Slider

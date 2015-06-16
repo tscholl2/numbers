@@ -20,7 +20,7 @@ module.exports =
       f = -> AppDispatcher.dispatch
           actionType: AppConstants.RESPONSE_RECIEVED
           response: res
-      setTimeout f, 750
+      setTimeout f, 1000
 
     _onSuccess: (res) ->
       console.log "actions: SUCCESS"
@@ -28,4 +28,4 @@ module.exports =
       f = -> AppDispatcher.dispatch
           actionType: AppConstants.RESPONSE_RECIEVED
           response: res
-      setTimeout f, 750
+      setTimeout f, 1000

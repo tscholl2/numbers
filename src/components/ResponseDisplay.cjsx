@@ -1,5 +1,6 @@
 React = require 'react'
-Loading = require 'react-loading'
+#Loading = require 'react-loading'
+Spinner = require 'react-spinkit'
 utils = require '../utils'
 mui = require 'material-ui'
 RaisedButton = mui.RaisedButton
@@ -14,14 +15,13 @@ SpeechBubble = React.createClass
     muiTheme: React.PropTypes.object
 
   getChildContext: ->
-      muiTheme: ThemeManager.getCurrentTheme()
+    muiTheme: ThemeManager.getCurrentTheme()
 
   getDefaultProps: ->
     response: null
     status: "blank" # TODO use this to generate error object or display
 
   render: ->
-      # TODO fix???
     <Paper rounded={true} style={borderRadius:"40px",padding:"20px"}>
       {
         console.log "rendering bubble: "
@@ -35,7 +35,9 @@ SpeechBubble = React.createClass
               if res.bytes?
                 "[#{utils.base64ToByteArray(res.bytes).join(', ')}]"
           when "sent"
-            <Loading type='bars' />
+            <div style={textAlign:"-webkit-center"}>
+              <Spinner spinnerName='cube-grid' noFadeIn />
+            </div>
           when "blank"
             "Hello!"
       }
@@ -43,23 +45,23 @@ SpeechBubble = React.createClass
 
 # this is a controller-view
 ResponseDisplay = React.createClass
-    displayName: 'ResponseDisplay'
+  displayName: 'ResponseDisplay'
 
-    getStateFromStore: ->
-        AppStore.getCurrent()
+  getStateFromStore: ->
+    AppStore.getCurrent()
 
-    getInitialState: ->
-        @getStateFromStore()
+  getInitialState: ->
+    @getStateFromStore()
 
-    componentDidMount: ->
-        AppStore.addChangeListener @_onResponse
+  componentDidMount: ->
+    AppStore.addChangeListener @_onResponse
 
-    _onResponse: ->
-        console.log "ResponseDisplay: _onResponse"
-        @setState @getStateFromStore()
+  _onResponse: ->
+    console.log "ResponseDisplay: _onResponse"
+    @setState @getStateFromStore()
 
-    render: ->
-        <SpeechBubble status={@state.status} response={@state.response} />
+  render: ->
+    <SpeechBubble status={@state.status} response={@state.response} />
 
 
 module.exports = ResponseDisplay
